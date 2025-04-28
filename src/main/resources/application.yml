@@ -1,0 +1,16 @@
+spring:
+  main:
+    web-application-type: none
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/naneandreasyan
+    username: naneandreasyan
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+app:
+  scraper:
+    url: https://catalog.aua.am/course-descriptions-2024/
