@@ -1,5 +1,6 @@
 package Persistence.Services.Implementation;
 
+import Persistence.DTO.CourseFilter;
 import Data.Entities.Course;
 import Persistence.Services.ICoursePersistenceService;
 import Persistence.Repository.CourseRepository;
@@ -33,5 +34,9 @@ public class CoursePersistenceService implements ICoursePersistenceService {
                     })
                     .orElseGet(() -> repo.save(c));
         }
+    }
+
+    public List<Course> findByFilter(CourseFilter filter) {
+        return repo.findAll(Persistence.Repository.CourseSpecifications.withFilter(filter));
     }
 }
