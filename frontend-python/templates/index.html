@@ -7,15 +7,24 @@
 <body>
     <h1>Student Course Planner</h1>
     <form action="/plan" method="post">
-        <label>Degree Program:</label><br>
-        <input type="text" name="degree"><br><br>
-        
-        <label>Completed Courses:</label><br>
-        <textarea name="completed" rows="5" cols="40"></textarea><br><br>
-        
-        <label>Preferences (Workload, Interests, Availability):</label><br>
-        <textarea name="preferences" rows="5" cols="40"></textarea><br><br>
-        
+        <label>First Name:</label><br>
+        <input type="text" name="name" required><br><br>
+
+        <label>Surname:</label><br>
+        <input type="text" name="surname" required><br><br>
+
+        <label>Student ID:</label><br>
+        <input type="text" name="student_id" required><br><br>
+
+        <label>Preferred Workload:</label><br>
+        <textarea name="workload" rows="3" cols="40" required></textarea><br><br>
+
+        <label>Academic Interests:</label><br>
+        <textarea name="interests" rows="3" cols="40" required></textarea><br><br>
+
+        <label>Weekly Availability:</label><br>
+        <textarea name="availability" rows="3" cols="40" required></textarea><br><br>
+
         <input type="submit" value="Generate Plan">
     </form>
 </body>
