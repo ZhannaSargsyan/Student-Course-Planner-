@@ -9,14 +9,19 @@ def index():
 
 @app.route('/plan', methods=['POST'])
 def plan():
-    degree = request.form['degree']
-    completed = request.form['completed']
-    preferences = request.form['preferences']
+    name = request.form['name']
+    surname = request.form['surname']
+    student_id = request.form['student_id']
+    workload = request.form['workload']
+    interests = request.form['interests']
+    availability = request.form['availability']
 
-    prompt = f"""Generate a semester plan for:
-    Degree: {degree}
-    Completed courses: {completed}
-    Preferences: {preferences}
+    prompt = f"""
+    Generate a semester plan for:
+    Student: {name} {surname}, ID: {student_id}
+    Workload: {workload}
+    Interests: {interests}
+    Availability: {availability}
     """
 
     gemini_response = get_gemini_plan(prompt)
