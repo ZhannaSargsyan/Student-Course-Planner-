@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Course Planner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Student Course Planner</h1>
+    <form action="/plan" method="post">
+        <label>Degree Program:</label><br>
+        <input type="text" name="degree"><br><br>
+        
+        <label>Completed Courses:</label><br>
+        <textarea name="completed" rows="5" cols="40"></textarea><br><br>
+        
+        <label>Preferences (Workload, Interests, Availability):</label><br>
+        <textarea name="preferences" rows="5" cols="40"></textarea><br><br>
+        
+        <input type="submit" value="Generate Plan">
+    </form>
+</body>
+</html>
