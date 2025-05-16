@@ -7,9 +7,14 @@ spring:
     username: naneandreasyan
     password: 1234
 
+  sql:
+    init:
+      mode: always
+
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
+    defer-datasource-initialization: true
 
 app:
   scraper:
