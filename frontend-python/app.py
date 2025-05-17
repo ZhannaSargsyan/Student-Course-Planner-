@@ -12,6 +12,7 @@ def plan():
     name = request.form['name']
     surname = request.form['surname']
     student_id = request.form['student_id']
+    degree = request.form['degree']
     workload = request.form['workload']
     interests = request.form['interests']
     availability = request.form['availability']
@@ -19,6 +20,7 @@ def plan():
     prompt = f"""
     Generate a semester plan for:
     Student: {name} {surname}, ID: {student_id}
+    Degree Program: {degree}
     Workload: {workload}
     Interests: {interests}
     Availability: {availability}
