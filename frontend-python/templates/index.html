@@ -5,15 +5,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Student Course Planner</h1>
+    <!--h1>Student Course Planner</h1-->
     <form action="/plan" method="post">
+
         <div class="form-row">
             <div class="form-group">
                 <label>First Name:</label>
                 <input type="text" name="name" required>
             </div>
+
             <div class="form-group">
-                <label>Surname:</label>
+                <label>Last Name:</label>
                 <input type="text" name="surname" required>
             </div>
         </div>
@@ -21,7 +23,7 @@
         <div class="form-row">
             <div class="form-group">
                 <label>Student ID:</label>
-                <input type="text" name="student_id" required>
+                <input type="text" name="student_id" placeholder="AB123456" required>
             </div>
         </div>
 
@@ -30,27 +32,28 @@
                 <label>Degree Program:</label>
                 <select name="degree" required>
                     <option value="">-- Select Degree --</option>
-                    <option>Bachelor of Arts in Business (BAB)</option>
-                    <option>Bachelor of Arts in English and Communications (BAEC)</option>
-                    <option>Bachelor of Arts in Politics and Governance (BAPG)</option>
-                    <option>Bachelor of Science in Computer Science (BSCS)</option>
-                    <option>Bachelor of Science in Data Science (BSDS)</option>
-                    <option>Bachelor of Science in Engineering Sciences (BSES)</option>
-                    <option>Bachelor of Science in Nursing (BSN)</option>
-                    <option>Bachelor of Science in Environmental and Sustainability Sciences (BSESS)</option>
-                    <option>Master of Laws (LL.M.)</option>
-                    <option>Master of Arts in International Relations and Diplomacy (MAIRD)</option>
-                    <option>Master of Public Affairs (MPA)</option>
-                    <option>Master of Arts in Human Rights and Social Justice (MAHRSJ)</option>
-                    <option>Master of Arts in Teaching English as a Foreign Language (MATEFL)</option>
-                    <option>Master of Science in Economics (MSE)</option>
-                    <option>Master of Business Administration (MBA)</option>
-                    <option>Master of Science in Management and Analytics (MSMA)</option>
-                    <option>Master of Engineering in Industrial Engineering and Systems Management (MEIESM)</option>
-                    <option>Master of Science in Computer and Information Science (MSCIS)</option>
-                    <option>Master of Public Health (MPH)</option>
-                    <option>Master of Arts in Multiplatform Journalism (MAMJ)</option>
+                    <option value="BAB">Bachelor of Arts in Business</option>
+                    <option value="BAEC">Bachelor of Arts in English and Communications</option>
+                    <option value="BAPG">Bachelor of Arts in Politics and Governance</option>
+                    <option value="BSCS">Bachelor of Science in Computer Science</option>
+                    <option value="BSDS">Bachelor of Science in Data Science</option>
+                    <option value="BSES">Bachelor of Science in Engineering Sciences</option>
+                    <option value="BSN">Bachelor of Science in Nursing</option>
+                    <option value="BSESS">Bachelor of Science in Environmental and Sustainability Sciences</option>
+                    <option value="LL.M.">Master of Laws</option>
+                    <option value="MAIRD">Master of Arts in International Relations and Diplomacy</option>
+                    <option value="MPA">Master of Public Affairs</option>
+                    <option value="MAHRSJ">Master of Arts in Human Rights and Social Justice</option>
+                    <option value="MATEFL">Master of Arts in Teaching English as a Foreign Language</option>
+                    <option value="MSE">Master of Science in Economics</option>
+                    <option value="MBA">Master of Business Administration</option>
+                    <option value="MSMA">Master of Science in Management and Analytics</option>
+                    <option value="MEIESM">Master of Engineering in Industrial Engineering and Systems Management</option>
+                    <option value="MSCIS">Master of Science in Computer and Information Science</option>
+                    <option value="MPH">Master of Public Health</option>
+                    <option value="MAMJ">Master of Arts in Multiplatform Journalism</option>
                 </select>
+
             </div>
         </div>
 
@@ -75,7 +78,45 @@
             </div>
         </div>
 
-        <input type="submit" value="Generate Plan">
+        <div class="form-row">
+            <input type="submit" value="Generate Plan">
+        </div>
+
+        <div class="form-row">
+             <a href='/'>← Back to Welcome Page</a>
+        </div>
+
     </form>
+
+    <script>
+        const form = document.querySelector('form');
+        const submitButton = form.querySelector('input[type="submit"]');
+        const requiredFields = form.querySelectorAll('input[required], textarea[required], select[required]');
+
+        function checkFormValidity() {
+            let allFilled = true;
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    allFilled = false;
+                }
+            });
+
+            if (allFilled) {
+                submitButton.disabled = false;
+                submitButton.classList.remove('disabled-button');
+            } else {
+                submitButton.disabled = true;
+                submitButton.classList.add('disabled-button');
+            }
+        }
+
+        requiredFields.forEach(field => {
+            field.addEventListener('input', checkFormValidity);
+        });
+
+        // Initial check
+        checkFormValidity();
+    </script>
+
 </body>
 </html>

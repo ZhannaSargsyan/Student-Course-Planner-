@@ -1,3 +1,4 @@
+/* ===== Base Layout ===== */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #eef2f7;
@@ -14,6 +15,7 @@ h1, h2 {
     text-align: center;
 }
 
+/* ===== Form Container ===== */
 form {
     background-color: #ffffff;
     padding: 2rem 3rem;
@@ -25,6 +27,15 @@ form {
     box-sizing: border-box;
 }
 
+form[action="/start"] {
+    background: none;
+    box-shadow: none;
+    padding: 1rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+/* ===== Form Fields ===== */
 .form-row {
     display: flex;
     gap: 2rem;
@@ -44,8 +55,15 @@ label {
     color: #34495e;
 }
 
+.agreement-text {
+    font-size: 0.7rem;
+    color: #555;
+    font-weight: normal;
+}
+
 input[type="text"],
-textarea {
+textarea,
+select {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #ccc;
@@ -56,7 +74,8 @@ textarea {
 }
 
 input[type="text"]:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
     border-color: #2980b9;
     outline: none;
 }
@@ -66,6 +85,11 @@ textarea {
     min-height: 70px;
 }
 
+select {
+    appearance: none;
+}
+
+/* ===== Buttons ===== */
 input[type="submit"] {
     background-color: #2980b9;
     color: white;
@@ -75,14 +99,27 @@ input[type="submit"] {
     font-size: 1rem;
     cursor: pointer;
     margin-top: 1rem;
-    transition: background-color 0.3s ease;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    transition: opacity 0.3s ease-in-out, background-color 0.3s ease;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover:not(.disabled-button) {
     background-color: #21618c;
+}
+
+.disabled-button {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* ===== Misc Elements ===== */
+input[type="checkbox"] {
+    transform: scale(1);
+    margin-right: 0.5rem;
 }
 
 pre {
@@ -108,17 +145,89 @@ a:hover {
     text-decoration: underline;
 }
 
-select {
+/* Chaos begins */
+
+.terms-box {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    width: 90%;
+    margin: 2rem auto;
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.6;
+}
+
+.terms-box ul {
+    padding-left: 1.2rem;
+}
+
+.back-button {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    color: #2980b9;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+}
+
+.result-box {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    width: 90%;
+    margin: 2rem auto;
+    font-family: monospace;
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+.followup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+    width: 90%;
+    max-width: 775px;
+}
+
+.followup-form label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #34495e;
+    font-weight: 600;
+}
+
+.followup-form input[type="text"] {
     width: 100%;
     padding: 0.75rem;
+    margin-bottom: 1rem;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 1rem;
     background-color: #f9fcff;
-    box-sizing: border-box;
 }
 
-select:focus {
-    border-color: #2980b9;
-    outline: none;
+.followup-form input[type="submit"] {
+    background-color: #2980b9;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.followup-form input[type="submit"]:hover {
+    background-color: #21618c;
 }
