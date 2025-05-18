@@ -8,8 +8,11 @@ import java.time.Instant;
 import java.util.List;
 
 import com.planner.Business.Services.ICoursePersistenceService;
+import com.planner.Data.DTO.CourseFilter;
 import com.planner.Data.Entities.Course;
 import com.planner.Data.Repository.CourseRepository;
+import com.planner.Data.Repository.CourseSpecifications;
+
 
 @Service
 public class CoursePersistenceService implements ICoursePersistenceService {
@@ -34,5 +37,9 @@ public class CoursePersistenceService implements ICoursePersistenceService {
                     })
                     .orElseGet(() -> repo.save(c));
         }
+    }
+
+    public List<Course> findByFilter(CourseFilter filter) {
+        return repo.findAll(CourseSpecifications.withFilter(filter));
     }
 }
