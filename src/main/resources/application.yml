@@ -1,6 +1,6 @@
 spring:
   main:
-    web-application-type: none
+    web-application-type: servlet
 
   datasource:
     url: jdbc:postgresql://localhost:5432/naneandreasyan
