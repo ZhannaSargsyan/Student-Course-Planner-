@@ -50,6 +50,13 @@ def plan():
         "BSES"   : "Bachelor of Science in Engineering Sciences",
         "BSN"    : "Bachelor of Science in Nursing",
         "BSESS"  : "Bachelor of Science in Environmental and Sustainability Sciences",
+
+        "CTHM"   : "Graduate Certificate in Tourism and Hospitality Management",
+        "CTR"    : "Graduate Certificate in Translation",
+        "ECM"    : "Graduate Executive Certificate in Management",
+        "MEIESM" : "Master of Engineering in Industrial Engineering and Systems Management",
+        "MPSIA"  : "Master of Political Science and International Affairs",
+
         "LL.M."  : "Master of Laws",
         "MAIRD"  : "Master of Arts in International Relations and Diplomacy",
         "MPA"    : "Master of Public Affairs",
