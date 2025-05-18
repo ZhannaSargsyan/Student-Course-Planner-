@@ -1407,4 +1407,5 @@ Important Considerations for Course Recommendations:
     *   CS120 Introduction to OOP
     *   CS121 Data Structures
     *   CS130 Computer Organization
-    *   CS211 Introduction to Algorithms');
+    *   CS211 Introduction to Algorithms')
+ON CONFLICT DO NOTHING;
