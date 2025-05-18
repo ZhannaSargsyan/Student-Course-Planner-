@@ -4,8 +4,15 @@ import requests
 app = Flask(__name__)
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def welcome():
+    return render_template('welcome.html')
+
+@app.route('/start', methods=['POST'])
+def start():
+    if request.form.get('agree') == 'on':
+        return render_template('index.html')
+    else:
+        return render_template('welcome.html', error="You must agree to the terms to continue.")
 
 @app.route('/plan', methods=['POST'])
 def plan():
