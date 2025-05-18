@@ -1,4 +1,4 @@
-package com.planner.model;
+package com.planner.Data.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Message {
+public class MessageDTO {
     private String role; // "user" or "assistant"
     private String content;
 

@@ -1,7 +1,8 @@
-package Business.Services.Implementation;
+package com.planner.Business.Services.Implementation;
 
-import Business.ICourseScraper;
-import Data.Entities.Course;
+import com.planner.Data.Entities.Course;
+import com.planner.Business.Services.ICourseScraper;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,6 +15,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 public class CourseScraper implements ICourseScraper {

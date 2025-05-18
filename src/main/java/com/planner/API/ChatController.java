@@ -1,11 +1,13 @@
-package com.planner.controller;
+package com.planner.API;
 
-import com.planner.model.SessionRequest;
-import com.planner.service.ChatService;
-import com.planner.service.JwtService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.planner.Business.Services.Implementation.ChatService;
+import com.planner.Business.Services.Implementation.JwtService;
+import com.planner.Data.DTO.SessionRequest;
 
 @RestController
 @RequestMapping("/api")

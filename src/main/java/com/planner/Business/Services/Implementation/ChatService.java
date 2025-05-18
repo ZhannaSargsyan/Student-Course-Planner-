@@ -1,8 +1,7 @@
-package com.planner.service;
+package com.planner.Business.Services.Implementation;
 
-import com.planner.model.Message;
-import com.planner.model.SessionRequest;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +12,10 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+
+import com.planner.Data.DTO.MessageDTO;
+import com.planner.Data.DTO.SessionRequest;
+
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +31,7 @@ public class ChatService {
 
         return session.getMessages().stream()
             .filter(message -> !message.getRole().equals("system"))
-            .map(Message::getContent)
+            .map(MessageDTO::getContent)
             .collect(Collectors.toList())
             .toArray(new String[0]);
     }
@@ -50,8 +53,8 @@ public class ChatService {
         );
         
         // Add the initial interaction to chat history
-        session.addMessage(new Message("system", initialPrompt));
-        session.addMessage(new Message("assistant", "Welcome! How can I assist you today?"));
+        session.addMessage(new MessageDTO("system", initialPrompt));
+        session.addMessage(new MessageDTO("assistant", "Welcome! How can I assist you today?"));
         
         sessions.put(sessionId, session);
         return this.jwtService.generateToken(sessionId);
@@ -66,7 +69,7 @@ public class ChatService {
         private final String degree;
         private final String profession;
         private LocalDateTime lastActivity;
-        private final List<Message> messages;
+        private final List<MessageDTO> messages;
 
         public ChatSession(String id, String degree, String profession, LocalDateTime lastActivity) {
             this.id = id;
@@ -84,11 +87,11 @@ public class ChatService {
             this.lastActivity = lastActivity;
         }
 
-        public List<Message> getMessages() {
+        public List<MessageDTO> getMessages() {
             return messages;
         }
 
-        public void addMessage(Message message) {
+        public void addMessage(MessageDTO message) {
             messages.add(message);
         }
     }
