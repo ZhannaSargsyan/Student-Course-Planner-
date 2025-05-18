@@ -1,8 +1,9 @@
-package Persistence.Services;
+package com.planner.Business.Services;
 
-import Persistence.DTO.CourseFilter;
-import Data.Entities.Course;
 import java.util.List;
+
+import com.planner.Data.DTO.CourseFilter;
+import com.planner.Data.Entities.Course;
 
 public interface ICoursePersistenceService {
 

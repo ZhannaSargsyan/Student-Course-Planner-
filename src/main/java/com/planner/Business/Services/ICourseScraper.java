@@ -1,6 +1,6 @@
-package Business;
+package com.planner.Business.Services;
 
-import Data.Entities.Course;
+import com.planner.Data.Entities.Course;
 
 import java.util.List;
 

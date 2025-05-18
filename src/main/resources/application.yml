@@ -1,6 +1,6 @@
 spring:
   main:
-    web-application-type: none
+    web-application-type: servlet
 
   datasource:
     url: jdbc:postgresql://localhost:5432/naneandreasyan
@@ -19,3 +19,13 @@ spring:
 app:
   scraper:
     url: https://catalog.aua.am/course-descriptions-2024/
+
+server:
+  port: 8080
+
+jwt:
+  secret: ${JWT_SECRET}
+
+genai:
+  api:
+    key: ${GENAI_API_KEY}

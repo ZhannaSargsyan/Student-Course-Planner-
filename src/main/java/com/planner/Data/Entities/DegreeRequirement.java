@@ -1,4 +1,4 @@
-package Data.Entities;
+package com.planner.Data.Entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
