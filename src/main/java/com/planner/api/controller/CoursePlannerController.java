@@ -1,6 +1,7 @@
 package com.planner.api.controller;
 
 import com.planner.api.dto.PlanRequest;
+import com.planner.business.services.ICoursePlannerService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
@@ -11,6 +12,12 @@ import org.springframework.http.ResponseEntity;
 @RequestMapping("/api/plan")
 public class CoursePlannerController {
 
+    private final ICoursePlannerService coursePlannerService;
+
+    public CoursePlannerController(ICoursePlannerService coursePlannerService) {
+        this.coursePlannerService = coursePlannerService;
+    }
+
 	/**
 	 * Receives a course planning request and returns a placeholder response.
 	 *
@@ -19,22 +26,9 @@ public class CoursePlannerController {
 	 */
     @PostMapping("/preview")
     public ResponseEntity<String> preview(@RequestBody PlanRequest request) {
-        // Echo back the received data for now
-        String message = String.format(
-            "Received: %s %s, ID: %s, Degree: %s, Workload: %s, Interests: %s, Availability: %s",
-            request.getFirstName(),
-            request.getLastName(),
-            request.getStudentId(),
-            request.getDegreeProgram(),
-            request.getPreferredWorkload(),
-            request.getAcademicInterests(),
-            request.getWeeklyAvailability()
-        );
+        String prompt = coursePlannerService.generatePlan(request);
 
-		//TO DO 1: Add preprocessing of the data and prompt generation
-		//To Do 2: Store gemini response in the message variable
-
-		//This is a placeholder for the actual logic to generate a course plan
-        return ResponseEntity.ok(message);
+        return ResponseEntity.ok(prompt);
     }
 }
+
