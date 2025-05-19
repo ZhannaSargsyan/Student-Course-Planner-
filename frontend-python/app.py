@@ -39,46 +39,12 @@ def plan():
     fields = ['name', 'surname', 'student_id', 'degree', 'workload', 'interests', 'availability']
     cleaned_data = {f: bleach.clean(request.form[f]) for f in fields}
 
-    degree = cleaned_data['degree']
-
-    degree_map = {
-        "BAB"    : "Bachelor of Arts in Business",
-        "BAEC"   : "Bachelor of Arts in English and Communications",
-        "BAPG"   : "Bachelor of Arts in Politics and Governance",
-        "BSCS"   : "Bachelor of Science in Computer Science",
-        "BSDS"   : "Bachelor of Science in Data Science",
-        "BSES"   : "Bachelor of Science in Engineering Sciences",
-        "BSN"    : "Bachelor of Science in Nursing",
-        "BSESS"  : "Bachelor of Science in Environmental and Sustainability Sciences",
-
-        "CTHM"   : "Graduate Certificate in Tourism and Hospitality Management",
-        "CTR"    : "Graduate Certificate in Translation",
-        "ECM"    : "Graduate Executive Certificate in Management",
-        "MEIESM" : "Master of Engineering in Industrial Engineering and Systems Management",
-        "MPSIA"  : "Master of Political Science and International Affairs",
-
-        "LL.M."  : "Master of Laws",
-        "MAIRD"  : "Master of Arts in International Relations and Diplomacy",
-        "MPA"    : "Master of Public Affairs",
-        "MAHRSJ" : "Master of Arts in Human Rights and Social Justice",
-        "MATEFL" : "Master of Arts in Teaching English as a Foreign Language",
-        "MSE"    : "Master of Science in Economics",
-        "MBA"    : "Master of Business Administration",
-        "MSMA"   : "Master of Science in Management and Analytics",
-        "MEIESM" : "Master of Engineering in Industrial Engineering and Systems Management",
-        "MSCIS"  : "Master of Science in Computer and Information Science",
-        "MPH"    : "Master of Public Health",
-        "MAMJ"   : "Master of Arts in Multiplatform Journalism"
-    }
-
-    full_degree_name = degree_map.get(degree, degree)
-
    # Build payload to match Java backend DTO
     payload = {
         "firstName": cleaned_data['name'],
         "lastName": cleaned_data['surname'],
         "studentId": cleaned_data['student_id'],
-        "degreeProgram": full_degree_name,
+        "degreeProgram": cleaned_data['degree'],
         "preferredWorkload": cleaned_data['workload'],
         "academicInterests": cleaned_data['interests'],
         "weeklyAvailability": cleaned_data['availability'],
