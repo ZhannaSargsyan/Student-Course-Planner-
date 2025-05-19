@@ -1,4 +1,4 @@
-package com.planner.Data.DTO;
+package com.planner.persistence.dto;
 
 import java.math.BigDecimal;
 import java.util.List;

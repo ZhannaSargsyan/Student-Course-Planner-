@@ -1,4 +1,4 @@
-package com.planner.Data.DTO;
+package com.planner.business.dto;
 
 import lombok.Data;
 

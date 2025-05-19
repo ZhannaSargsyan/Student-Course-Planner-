@@ -1,4 +1,4 @@
-package com.planner.Business.Services.Implementation;
+package com.planner.business.services.implementation;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

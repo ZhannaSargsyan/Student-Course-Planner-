@@ -1,20 +1,24 @@
-package com.planner.API;
+package com.planner.api.controller;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.planner.Business.Services.Implementation.ChatService;
-import com.planner.Business.Services.Implementation.JwtService;
-import com.planner.Data.DTO.SessionRequest;
+import com.planner.business.dto.SessionRequest;
+import com.planner.business.services.implementation.ChatService;
+import com.planner.business.services.implementation.JwtService;
 
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
 public class ChatController {
     private final ChatService chatService;
     private final JwtService jwtService;
+
+    public ChatController(ChatService chatService, JwtService jwtService) {
+        this.chatService = chatService;
+        this.jwtService = jwtService;
+    }
 
     @PostMapping("/session")
     public ResponseEntity<String> startSession(@RequestBody SessionRequest request) {
