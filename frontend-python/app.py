@@ -73,20 +73,22 @@ def plan():
 
     full_degree_name = degree_map.get(degree, degree)
 
-    prompt = f"""
-    Generate a semester plan for the student: {cleaned_data['name']} {cleaned_data['surname']}, ID: {cleaned_data['student_id']}
+   # Build payload to match Java backend DTO
+    payload = {
+        "firstName": cleaned_data['name'],
+        "lastName": cleaned_data['surname'],
+        "studentId": cleaned_data['student_id'],
+        "degreeProgram": full_degree_name,
+        "preferredWorkload": cleaned_data['workload'],
+        "academicInterests": cleaned_data['interests'],
+        "weeklyAvailability": cleaned_data['availability'],
+    }
 
-    Some additinal inforamation about the student:
-    Degree Program: {full_degree_name}
-    Preferred workload: {cleaned_data['workload']}
-    Interests: {cleaned_data['interests']}
-    Availability: {cleaned_data['availability']}
-    """
+    # Send to Java backend
+    response = requests.post("http://localhost:8080/api/plan/preview", json=payload)
+    backend_response = response.text
 
-    print(prompt)
-
-    gemini_response = get_gemini_plan(prompt)
-    return render_template('result.html', response=gemini_response)
+    return render_template('result.html', response=backend_response)
 
 def get_gemini_plan(prompt):
     api_key = 'GEMINI_API_KEY'
