@@ -1,7 +1,7 @@
-package com.planner.Business.Services.Implementation;
+package com.planner.business.services.implementation;
 
-import com.planner.Data.Entities.Course;
-import com.planner.Business.Services.ICourseScraper;
+import com.planner.business.services.ICourseScraper;
+import com.planner.data.entities.Course;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

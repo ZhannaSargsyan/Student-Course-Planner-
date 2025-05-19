@@ -1,9 +1,12 @@
-package com.planner.Business.Services.Implementation;
+package com.planner.business.services.implementation;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import com.planner.business.dto.MessageDTO;
+import com.planner.business.dto.SessionRequest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,16 +16,16 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import com.planner.Data.DTO.MessageDTO;
-import com.planner.Data.DTO.SessionRequest;
-
 
 @Service
-@RequiredArgsConstructor
+// @RequiredArgsConstructor
 public class ChatService {
     private final JwtService jwtService;
     private Map<String, ChatSession> sessions = new ConcurrentHashMap<>();
 
+    public ChatService(JwtService jwtService) {
+        this.jwtService = jwtService;
+    }
     public String[] getChatHistory(String sessionId) {
         ChatSession session = sessions.get(sessionId);
         if (session == null) {

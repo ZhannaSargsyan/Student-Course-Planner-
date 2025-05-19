@@ -1,15 +1,14 @@
-package com.planner.Data.Repository;
+package com.planner.persistence.repository;
 
 import org.springframework.data.jpa.domain.Specification;
-
-import com.planner.Data.DTO.CourseFilter;
 
 import jakarta.persistence.criteria.Predicate;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.planner.Data.Entities.Course;
+import com.planner.data.entities.Course;
+import com.planner.persistence.dto.CourseFilter;
 
 /**
  * JPA Specification instances to filter courses based on provided fields.

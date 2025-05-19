@@ -1,4 +1,4 @@
-package com.planner.Business.Services.Implementation;
+package com.planner.persistence.services.implementation;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -7,11 +7,11 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 
-import com.planner.Business.Services.ICoursePersistenceService;
-import com.planner.Data.DTO.CourseFilter;
-import com.planner.Data.Entities.Course;
-import com.planner.Data.Repository.CourseRepository;
-import com.planner.Data.Repository.CourseSpecifications;
+import com.planner.persistence.repository.CourseRepository;
+import com.planner.persistence.repository.CourseSpecifications;
+import com.planner.data.entities.Course;
+import com.planner.persistence.dto.CourseFilter;
+import com.planner.persistence.services.ICoursePersistenceService;
 
 
 @Service
