@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.planner.business_temp.dto.SessionRequest;
-import com.planner.business_temp.services_temp.implementation_temp.ChatService;
-import com.planner.business_temp.services_temp.implementation_temp.JwtService;
+import com.planner.business.dto.SessionRequest;
+import com.planner.business.services.implementation.ChatService;
+import com.planner.business.services.implementation.JwtService;
 
 @RestController
 @RequestMapping("/api")

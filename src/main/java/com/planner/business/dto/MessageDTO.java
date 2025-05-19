@@ -1,4 +1,4 @@
-package com.planner.business_temp.dto;
+package com.planner.business.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

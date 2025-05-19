@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.planner.persistence.repository.CourseRepository;
 import com.planner.persistence.repository.CourseSpecifications;
-import com.planner.data_temp.entities_temp.Course;
+import com.planner.data.entities.Course;
 import com.planner.persistence.dto.CourseFilter;
 import com.planner.persistence.services.ICoursePersistenceService;
 

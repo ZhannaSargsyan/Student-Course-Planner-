@@ -7,7 +7,7 @@ import jakarta.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.planner.data_temp.entities_temp.Course;
+import com.planner.data.entities.Course;
 import com.planner.persistence.dto.CourseFilter;
 
 /**
