@@ -1,4 +1,4 @@
-package com.planner.data.entities;
+package com.planner.data_temp.entities_temp;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

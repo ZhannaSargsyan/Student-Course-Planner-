@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import com.planner.data.entities.Course;
+import com.planner.data_temp.entities_temp.Course;
 
 import java.util.Optional;
 @Repository
