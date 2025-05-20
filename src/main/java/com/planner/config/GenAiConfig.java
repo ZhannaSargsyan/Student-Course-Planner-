@@ -1,4 +1,4 @@
-package com.planner.config;
+package com.planner.Config;
 
 import com.google.genai.Client;
 

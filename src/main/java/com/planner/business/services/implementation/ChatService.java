@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.planner.api.dto.PlanRequest;
 import com.planner.business.dto.MessageDTO;
-import com.planner.business.dto.SessionRequest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,54 +14,57 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
+
+import com.google.genai.Client;
+import com.google.genai.types.Content;
+import com.google.genai.types.GenerateContentResponse;
+import com.google.genai.types.Part;
 
 
 @Service
-// @RequiredArgsConstructor
 public class ChatService {
     private final Client genAIClient;
     private final JwtService jwtService;
+    private final CoursePlannerService coursePlannerService;
     private Map<String, ChatSession> sessions = new ConcurrentHashMap<>();
 
-    public ChatService(JwtService jwtService) {
+    public ChatService(Client genAIClient, JwtService jwtService, CoursePlannerService coursePlannerService) {
+        this.genAIClient = genAIClient;
         this.jwtService = jwtService;
+        this.coursePlannerService = coursePlannerService;
     }
-    public String[] getChatHistory(String sessionId) {
+
+    public List<MessageDTO> getChatHistory(String sessionId) {
         ChatSession session = sessions.get(sessionId);
         if (session == null) {
             throw new IllegalStateException("Session not found");
         }
 
-        return session.getMessages().stream()
-            .filter(message -> !message.getRole().equals("system"))
-            .map(MessageDTO::getContent)
-            .collect(Collectors.toList())
-            .toArray(new String[0]);
+        List<MessageDTO> messages = session.getMessages();
+        if (!messages.isEmpty()) {
+            messages = messages.subList(1, messages.size());
+        }
+
+        return messages;
     }
 
-    public String startSession(SessionRequest request) {
-        String sessionId = UUID.randomUUID().toString();
-        String initialPrompt = String.format(
-            "You are a course planning assistant. The user has a %s degree and works as a %s. " +
-            "Help them plan their educational journey and provide relevant course recommendations. " +
-            "Be concise but informative in your responses.",
-            request.getDegree(), request.getProfession()
-        );
+    public String startNewSession() {
+        ChatSession session = new ChatSession();
 
-        ChatSession session = new ChatSession(
-            sessionId,
-            request.getDegree(),
-            request.getProfession(),
-            LocalDateTime.now()
-        );
-        
-        // Add the initial interaction to chat history
-        session.addMessage(new MessageDTO("system", initialPrompt));
-        session.addMessage(new MessageDTO("assistant", "Welcome! How can I assist you today?"));
-        
-        sessions.put(sessionId, session);
-        return this.jwtService.generateToken(sessionId);
+        sessions.put(session.getId(), session);
+        return this.jwtService.generateToken(session.getId());
+    }
+
+    public String requestInitialPlan(String sessionId, PlanRequest request) {
+        ChatSession session = sessions.get(sessionId);
+        if (session == null) {
+            throw new IllegalStateException("Session not found");
+        }
+
+        String initialPrompt = coursePlannerService.generatePlan(request);
+        String planResponse = this.askModel(session.getId(), initialPrompt);
+
+        return planResponse;
     }
 
     public String sendMessage(String sessionId, String message) {
@@ -70,28 +73,36 @@ public class ChatService {
             throw new IllegalStateException("Session not found");
         }
 
-        session.setLastActivity(LocalDateTime.now());
-        session.addMessage(new Message("user", message));
+        String assistantResponse = this.askModel(sessionId, message);
 
-        // Build context from chat history
-        StringBuilder contextBuilder = new StringBuilder();
-        contextBuilder.append("Previous conversation:\n");
-        
-        // Get last 10 messages to avoid token limit issues
-        List<Message> recentMessages = session.getMessages()
-            .subList(Math.max(0, session.getMessages().size() - 10), session.getMessages().size());
-            
-        for (Message msg : recentMessages) {
-            contextBuilder.append(msg.getRole()).append(": ").append(msg.getContent()).append("\n");
+        return assistantResponse;
+    }
+
+    public String askModel(String sessionId, String message) {
+        ChatSession session = sessions.get(sessionId);
+        if (session == null) {
+            throw new IllegalStateException("Session not found");
         }
-        contextBuilder.append("\nCurrent user message: ").append(message);
-        
-        Content content = Content.fromParts(Part.fromText(contextBuilder.toString()));
+
+        session.addMessage(new MessageDTO("user", message));
+
+        List<Content> contents = new ArrayList<>();
+
+        for (MessageDTO msg : session.getMessages()) {
+            Content content = Content.builder()
+                .role(msg.getRole())
+                .parts(List.of(Part.builder()
+                    .text(msg.getContent())
+                    .build()))
+                .build();
+            contents.add(content);
+        }
+
         GenerateContentResponse response = genAIClient.models
-            .generateContent("gemini-2.0-flash-001", content, null);
+            .generateContent("gemini-2.0-flash-001", contents, null);
 
         String assistantResponse = response.text();
-        session.addMessage(new Message("assistant", assistantResponse));
+        session.addMessage(new MessageDTO("model", assistantResponse));
 
         return assistantResponse;
     }
@@ -100,41 +111,39 @@ public class ChatService {
         sessions.remove(sessionId);
     }
 
-    @Scheduled(fixedRate = 60 * 60 * 1000) // check every hour
+    @Scheduled(fixedRate = 60 * 60 * 1000) // check every hour for inactive sessions
     public void cleanupInactiveSessions() {
-        LocalDateTime cutoff = LocalDateTime.now().minusMinutes(60);
+        LocalDateTime cutoff = LocalDateTime.now().minusHours(24);
         sessions.entrySet().removeIf(entry -> 
             entry.getValue().getLastActivity().isBefore(cutoff));
     }
 
     private static class ChatSession {
         private final String id;
-        private final String degree;
-        private final String profession;
         private LocalDateTime lastActivity;
         private final List<MessageDTO> messages;
 
-        public ChatSession(String id, String degree, String profession, LocalDateTime lastActivity) {
-            this.id = id;
-            this.degree = degree;
-            this.profession = profession;
-            this.lastActivity = lastActivity;
+        public ChatSession() {
+            this.id = UUID.randomUUID().toString();
+            this.lastActivity = LocalDateTime.now();
             this.messages = new ArrayList<>();
+        }
+
+        public String getId() {
+            return id;
         }
 
         public LocalDateTime getLastActivity() {
             return lastActivity;
         }
 
-        public void setLastActivity(LocalDateTime lastActivity) {
-            this.lastActivity = lastActivity;
-        }
-
         public List<MessageDTO> getMessages() {
+            this.lastActivity = LocalDateTime.now();
             return messages;
         }
 
         public void addMessage(MessageDTO message) {
+            this.lastActivity = LocalDateTime.now();
             messages.add(message);
         }
     }
