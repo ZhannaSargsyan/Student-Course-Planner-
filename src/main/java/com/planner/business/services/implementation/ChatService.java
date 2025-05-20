@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @Service
 // @RequiredArgsConstructor
 public class ChatService {
+    private final Client genAIClient;
     private final JwtService jwtService;
     private Map<String, ChatSession> sessions = new ConcurrentHashMap<>();
 
@@ -63,8 +64,47 @@ public class ChatService {
         return this.jwtService.generateToken(sessionId);
     }
 
+    public String sendMessage(String sessionId, String message) {
+        ChatSession session = sessions.get(sessionId);
+        if (session == null) {
+            throw new IllegalStateException("Session not found");
+        }
+
+        session.setLastActivity(LocalDateTime.now());
+        session.addMessage(new Message("user", message));
+
+        // Build context from chat history
+        StringBuilder contextBuilder = new StringBuilder();
+        contextBuilder.append("Previous conversation:\n");
+        
+        // Get last 10 messages to avoid token limit issues
+        List<Message> recentMessages = session.getMessages()
+            .subList(Math.max(0, session.getMessages().size() - 10), session.getMessages().size());
+            
+        for (Message msg : recentMessages) {
+            contextBuilder.append(msg.getRole()).append(": ").append(msg.getContent()).append("\n");
+        }
+        contextBuilder.append("\nCurrent user message: ").append(message);
+        
+        Content content = Content.fromParts(Part.fromText(contextBuilder.toString()));
+        GenerateContentResponse response = genAIClient.models
+            .generateContent("gemini-2.0-flash-001", content, null);
+
+        String assistantResponse = response.text();
+        session.addMessage(new Message("assistant", assistantResponse));
+
+        return assistantResponse;
+    }
+
     public void endSession(String sessionId) {
         sessions.remove(sessionId);
+    }
+
+    @Scheduled(fixedRate = 60 * 60 * 1000) // check every hour
+    public void cleanupInactiveSessions() {
+        LocalDateTime cutoff = LocalDateTime.now().minusMinutes(60);
+        sessions.entrySet().removeIf(entry -> 
+            entry.getValue().getLastActivity().isBefore(cutoff));
     }
 
     private static class ChatSession {
