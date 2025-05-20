@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import requests
+import re
 import bleach
 
 app = Flask(__name__)
@@ -36,8 +37,16 @@ def followup():
 
 @app.route('/plan', methods=['POST'])
 def plan():
-    fields = ['name', 'surname', 'student_id', 'degree', 'workload', 'interests', 'availability']
+    fields = ['name', 'surname', 'student_id', 'degree', 'workload', 'interests', 'availability', 'credits', 'taken_courses']
     cleaned_data = {f: bleach.clean(request.form[f]) for f in fields}
+
+    try:
+        desired_credits = float(cleaned_data['credits'])
+    except ValueError:
+        desired_credits = 0
+
+    taken_courses = [ code.strip().upper() for code in cleaned_data['taken_courses'].split(',') if code.strip() ]
+    valid_course_codes = [code for code in taken_courses if re.match(r'^[A-Z]{1,3}[0-9]{3}$', code)]
 
    # Build payload to match Java backend DTO
     payload = {
@@ -48,7 +57,10 @@ def plan():
         "preferredWorkload": cleaned_data['workload'],
         "academicInterests": cleaned_data['interests'],
         "weeklyAvailability": cleaned_data['availability'],
+        "desiredCredits": desired_credits,
+        "takenCourses": valid_course_codes
     }
+    print(payload)
 
     # Send to Java backend
     response = requests.post("http://localhost:8080/api/plan/preview", json=payload)
