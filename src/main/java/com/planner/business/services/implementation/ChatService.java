@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.planner.api.dto.PlanRequest;
+import com.planner.business.dto.PlanRequest;
 import com.planner.business.dto.MessageDTO;
 
 import java.time.LocalDateTime;

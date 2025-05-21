@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.planner.api.dto.PlanRequest;
+import com.planner.business.dto.PlanRequest;
 import com.planner.business.dto.MessageDTO;
 import com.planner.business.dto.MessageRequest;
 import com.planner.business.services.IChatService;

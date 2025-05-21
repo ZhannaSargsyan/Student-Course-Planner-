@@ -1,4 +1,4 @@
-package com.planner.api.dto;
+package com.planner.business.dto;
 
 import java.util.List;
 

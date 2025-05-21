@@ -1,6 +1,6 @@
 package com.planner.business.utils;
 
-import com.planner.api.dto.PlanRequest;
+import com.planner.business.dto.PlanRequest;
 import com.planner.data.entities.Course;
 import java.util.List;
 

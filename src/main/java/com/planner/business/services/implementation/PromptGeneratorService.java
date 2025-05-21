@@ -1,6 +1,6 @@
 package com.planner.business.services.implementation;
 
-import com.planner.api.dto.PlanRequest;
+import com.planner.business.dto.PlanRequest;
 import com.planner.business.services.IPromptGeneratorService;
 import com.planner.business.utils.PromptBuilder;
 import com.planner.data.entities.Course;

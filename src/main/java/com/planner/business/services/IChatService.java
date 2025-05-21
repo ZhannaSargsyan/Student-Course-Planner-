@@ -1,6 +1,6 @@
 package com.planner.business.services;
 
-import com.planner.api.dto.PlanRequest;
+import com.planner.business.dto.PlanRequest;
 import com.planner.business.dto.MessageDTO;
 
 import java.util.List;
