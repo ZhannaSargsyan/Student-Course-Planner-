@@ -45,6 +45,14 @@ public class PromptBuilder {
             sb.append("Weekly Availability: ").append(preferences.getWeeklyAvailability()).append("\n");
         }
 
+        if (preferences.getDesiredCredits() != 0) {
+            sb.append("Desired Credits: ").append(preferences.getDesiredCredits()).append("\n");
+        }
+
+        if (preferences.getTakenCourses() != null && !preferences.getTakenCourses().isEmpty()) {
+            sb.append("Already taken courses: ").append(String.join(", ", preferences.getTakenCourses())).append("\n");
+        }
+
         sb.append("\nAvailable courses:\n");
         for (Course c : courses) {
             sb
