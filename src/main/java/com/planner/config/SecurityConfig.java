@@ -1,4 +1,4 @@
-package com.planner.Config;
+package com.planner.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
