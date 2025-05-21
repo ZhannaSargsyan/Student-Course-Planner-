@@ -47,6 +47,9 @@ def followup():
     else:
         chat_history = []
 
+    for msg in chat_history:
+        msg["content"] = markdown.markdown(msg["content"])
+        
     return render_template(
         'followup.html',
         chat_history=chat_history
