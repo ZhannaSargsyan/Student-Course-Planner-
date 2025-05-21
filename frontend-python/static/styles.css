@@ -9,6 +9,22 @@ body {
     align-items: center;
 }
 
+body::after {
+    content: "";
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 20vw; 
+    aspect-ratio: 432 / 415;
+    max-width: 432px;
+    max-height: 415px;
+    background-image: url("/static/poghos.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 0;
+}
+
 h1, h2 {
     color: #2c3e50;
     margin-top: 2rem;
