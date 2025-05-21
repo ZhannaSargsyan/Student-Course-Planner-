@@ -5,21 +5,21 @@
 
 <div class="result-box">
     <h4>Original Plan:</h4>
-    <pre>{{ original }}</pre>
+    {{ original | safe }}
 </div>
 
 <div class="result-box">
     <h4>Your Question:</h4>
-    <pre>{{ question }}</pre>
+    {{ question | safe }}
 </div>
 
 <div class="result-box">
     <h4>Gemini's Response:</h4>
-    <pre>{{ followup_response }}</pre>
+    {{ followup_response | safe }}
 </div>
 
 <form action="/followup" method="post" class="followup-form">
-    <input type="hidden" name="original" value="{{ original }}">
+    <input type="hidden" name="original" value="{{ original | safe }}">
     <label for="question">Ask another question:</label>
     <input type="text" id="question" name="question" placeholder="e.g., What if I drop one course?" required>
     <input type="submit" value="Ask Again">

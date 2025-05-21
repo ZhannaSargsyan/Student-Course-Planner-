@@ -3,3 +3,4 @@ target
 .vscode
 venv/
 .LCK*
+frontend-python/__pycache__
