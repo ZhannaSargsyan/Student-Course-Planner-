@@ -4,6 +4,7 @@ import com.planner.business.services.IChatService;
 import com.planner.business.models.ChatSession;
 
 import com.planner.business.services.IPromptGeneratorService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +22,15 @@ import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.Part;
 
-
 @Service
 public class ChatService  implements IChatService {
     private final Client genAIClient;
     private final JwtService jwtService;
     private final IPromptGeneratorService promptGeneratorService;
+
+    @Value("${genai.model}")
+    private String modelName;
+
     private Map<String, ChatSession> sessions = new ConcurrentHashMap<>();
 
     public ChatService(Client genAIClient, JwtService jwtService, IPromptGeneratorService promptGeneratorService) {
@@ -62,7 +66,7 @@ public class ChatService  implements IChatService {
             throw new IllegalStateException("Session not found");
         }
 
-        String initialPrompt = promptGeneratorService.generatePlan(request);
+        String initialPrompt = promptGeneratorService.generatePrompt(request);
         String planResponse = this.askModel(session.getId(), initialPrompt);
 
         return planResponse;
@@ -100,7 +104,7 @@ public class ChatService  implements IChatService {
         }
 
         GenerateContentResponse response = genAIClient.models
-            .generateContent("gemini-2.0-flash-001", contents, null);
+            .generateContent(modelName, contents, null);
 
         String assistantResponse = response.text();
         session.addMessage(new MessageDTO("model", assistantResponse));

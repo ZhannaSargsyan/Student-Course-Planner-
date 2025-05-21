@@ -18,18 +18,23 @@ public class PromptGeneratorService implements IPromptGeneratorService {
     private final ICoursePersistenceService coursePersistenceService;
     private final DegreeRequirementRepository degreeRequirementRepository;
 
-    public PromptGeneratorService(ICoursePersistenceService coursePersistenceService, DegreeRequirementRepository degreeRequirementRepository) {
+    public PromptGeneratorService(ICoursePersistenceService coursePersistenceService,
+                                  DegreeRequirementRepository degreeRequirementRepository) {
         this.coursePersistenceService = coursePersistenceService;
         this.degreeRequirementRepository = degreeRequirementRepository;
     }
 
     @Override
-    public String generatePlan(PlanRequest request) {
+    public String generatePrompt(PlanRequest request) {
         CourseFilter filter = new CourseFilter();
 
         filter.setExcludedCourseCodes(request.getTakenCourses());
 
         List<Course> availableCourses = coursePersistenceService.findByFilter(filter);
+
+        if (availableCourses.isEmpty()) {
+            availableCourses = coursePersistenceService.findAll();
+        }
 
         Optional<DegreeRequirement> requirementOpt = degreeRequirementRepository.findByProgram(request.getDegreeProgram());
         String programSummary = requirementOpt.map(DegreeRequirement::getSummary).orElse("N/A");
