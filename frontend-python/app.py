@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 import requests
 import bleach
 import re
 import os
 
 app = Flask(__name__)
+app.secret_key = "your_super_secret_key"
 
 @app.route('/')
 def welcome():
@@ -25,11 +26,18 @@ def start():
 def followup():
     original = request.form.get('original', '[No original response]')
     question = request.form.get('question', '')
-
-    # Placeholder: Echoing for now
-    followup_prompt = f"Follow-up question: {question}\n\nOriginal response:\n{original}"
-    # followup_response = get_gemini_plan(followup_prompt)
-    followup_response = followup_prompt  # temporary echo
+    jwt_token = session.get('jwt_token')
+    backend_url = os.environ.get('BACKEND_URL', 'http://localhost:8080')
+    headers = {'Authorization': f'Bearer {jwt_token}'} if jwt_token else {}
+    followup_payload = {
+        "message": question
+    }
+    response = requests.post(
+        f"{backend_url}/api/messages",
+        json=followup_payload,
+        headers=headers
+    ) if jwt_token else None
+    followup_response = response.text if response else f"Follow-up question: {question}\n\nOriginal response:\n{original}"
 
     return render_template('followup.html',
                            original=original,
@@ -63,14 +71,17 @@ def plan():
     }
 
 
-    print(payload)
-
-    # Use backend hostname in Docker, fallback to localhost when running locally
-
-
-# Send to Java backend
     backend_url = os.environ.get('BACKEND_URL', 'http://localhost:8080')
-    response = requests.post(f"{backend_url}/api/plan/preview", json=payload)
+    session_response = requests.post(f"{backend_url}/api/session")
+    jwt_token = session_response.text.strip().replace('"', '')
+    session['jwt_token'] = jwt_token
+
+    headers = {'Authorization': f'Bearer {jwt_token}'}
+    response = requests.post(
+        f"{backend_url}/api/generate-plan",
+        json=payload,
+        headers=headers
+    )
     backend_response = response.text
 
     return render_template('result.html', response=backend_response)
