@@ -1,21 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Follow-Up Response</h2>
+<h2>Conversation History</h2>
 
-<div class="result-box">
-    <h4>Original Plan:</h4>
-    {{ original | safe }}
-</div>
-
-<div class="result-box">
-    <h4>Your Question:</h4>
-    {{ question | safe }}
-</div>
-
-<div class="result-box">
-    <h4>Gemini's Response:</h4>
-    {{ followup_response | safe }}
+<div class="chat-history" id="chat-history">
+    {% for message in chat_history %}
+        <div class="result-box" {% if loop.last %}id="last-message"{% endif %}>
+            {% if message.role == "user" %}
+                <h4>Your Question:</h4>
+            {% else %}
+                <h4>Gemini's Response:</h4>
+            {% endif %}
+            {{ message.content | safe }}
+        </div>
+    {% endfor %}
 </div>
 
 <form action="/followup" method="post" class="followup-form">
@@ -27,4 +25,12 @@
 
 <a href="/" class="back-button">← Start Over</a>
 
+<script>
+window.onload = function() {
+    var lastMsg = document.getElementById("last-message");
+    if (lastMsg) {
+        lastMsg.scrollIntoView({ behavior: "smooth" });
+    }
+};
+</script>
 {% endblock %}

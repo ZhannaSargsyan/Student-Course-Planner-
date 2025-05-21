@@ -33,21 +33,24 @@ def followup():
     followup_payload = {
         "message": question
     }
-    response = requests.post(
-        f"{backend_url}/api/messages",
-        json=followup_payload,
-        headers=headers
-    ) if jwt_token else None
+    
+    if jwt_token and question:
+        requests.post(
+            f"{backend_url}/api/messages",
+            json={"message": question},
+            headers=headers
+        )
 
-    followup_response = response.text if response else f"Follow-up question: {question}\n\nOriginal response:\n{original}"
-    followup_response_html = markdown.markdown(followup_response)
+    if jwt_token:
+        resp = requests.get(f"{backend_url}/api/messages", headers=headers)
+        chat_history = resp.json()
+    else:
+        chat_history = []
 
-    return render_template('followup.html',
-                           original=original,
-                           original_html=markdown.markdown(original),
-                           question=question,
-                           followup_response=followup_response_html
-                           )
+    return render_template(
+        'followup.html',
+        chat_history=chat_history
+    )
 
 @app.route('/plan', methods=['POST'])
 def plan():
