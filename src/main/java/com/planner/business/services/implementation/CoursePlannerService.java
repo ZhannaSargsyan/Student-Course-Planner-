@@ -18,27 +18,18 @@ import java.util.Optional;
 public class CoursePlannerService implements ICoursePlannerService {
     private final ICoursePersistenceService coursePersistenceService;
     private final DegreeRequirementRepository degreeRequirementRepository;
-    private final ICourseScraper courseScraper;
 
 
     public CoursePlannerService(ICoursePersistenceService coursePersistenceService,
-                                DegreeRequirementRepository degreeRequirementRepository,
-                                ICourseScraper courseScraper) {
+                                DegreeRequirementRepository degreeRequirementRepository) {
         this.coursePersistenceService = coursePersistenceService;
         this.degreeRequirementRepository = degreeRequirementRepository;
-        this.courseScraper = courseScraper;
     }
 
     @Override
     public String generatePlan(PlanRequest request) {
         CourseFilter filter = new CourseFilter();
         filter.setProgram(request.getDegreeProgram());
-
-        long totalCourses = coursePersistenceService.count();
-        if (totalCourses == 0) {
-            List<Course> scraped = courseScraper.scrapeCourses();
-            coursePersistenceService.upsertAll(scraped);
-        }
 
         List<Course> availableCourses = coursePersistenceService.findByFilter(filter);
 

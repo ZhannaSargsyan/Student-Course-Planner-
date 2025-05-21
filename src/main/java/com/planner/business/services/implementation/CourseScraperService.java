@@ -41,7 +41,7 @@ public class CourseScraperService implements ICourseScraper {
                 String tag = el.tagName(), txt = el.text().trim();
 
                 if ("h3".equals(tag)) continue;
-                if (txt.matches("^[A-Z]{2,}(\\.[A-Z]+)*\\.?$")) {
+                if (txt.matches("^[A-Z]{2,}(\\.[A-Z]+)*\\.?$") || txt.equals("General Education")) {
                     currentProgram = txt;
                     continue;
                 }
