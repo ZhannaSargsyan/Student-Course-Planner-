@@ -298,8 +298,9 @@ body.dark-mode label {
     color: #5d80a2;
 }
 
-
-body.dark-mode input,
+body.dark-mode input[type="text"],
+body.dark-mode input[type="number"],
+body.dark-mode input[type="submit"],
 body.dark-mode textarea,
 body.dark-mode select {
     background-color: #3a3a3a;

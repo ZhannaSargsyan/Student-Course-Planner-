@@ -38,12 +38,16 @@ def followup():
         json=followup_payload,
         headers=headers
     ) if jwt_token else None
+
     followup_response = response.text if response else f"Follow-up question: {question}\n\nOriginal response:\n{original}"
+    followup_response_html = markdown.markdown(followup_response)
 
     return render_template('followup.html',
                            original=original,
+                           original_html=markdown.markdown(original),
                            question=question,
-                           followup_response=followup_response)
+                           followup_response=followup_response_html
+                           )
 
 @app.route('/plan', methods=['POST'])
 def plan():
@@ -87,23 +91,6 @@ def plan():
     backend_response_html = markdown.markdown(backend_response)
 
     return render_template('result.html', response=backend_response_html, response_text=backend_response)
-
-def get_gemini_plan(prompt):
-    api_key = 'GEMINI_API_KEY'
-    endpoint = 'https://GEMINI_ENDPOINT'
-    headers = {
-        'Authorization': f'Bearer {api_key}',
-        'Content-Type': 'application/json'
-    }
-    data = {
-        "prompt": prompt,
-        "model": "gemini-1.5-pro"
-    }
-
-    # response = requests.post(endpoint, headers=headers, json=data)
-    # return response.json().get("text", "No response from Gemini")
-
-    return prompt
 
 if __name__ == '__main__':
     app.run(debug=True)

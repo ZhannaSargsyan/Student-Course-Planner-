@@ -5,17 +5,17 @@
 
 <div class="result-box">
     <h4>Original Plan:</h4>
-    <pre>{{ original | safe }}</pre>
+    {{ original | safe }}
 </div>
 
 <div class="result-box">
     <h4>Your Question:</h4>
-    <pre>{{ question | safe }}</pre>
+    {{ question | safe }}
 </div>
 
 <div class="result-box">
     <h4>Gemini's Response:</h4>
-    <pre>{{ followup_response | safe }}</pre>
+    {{ followup_response | safe }}
 </div>
 
 <form action="/followup" method="post" class="followup-form">
