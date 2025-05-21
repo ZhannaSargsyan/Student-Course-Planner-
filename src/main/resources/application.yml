@@ -27,5 +27,6 @@ jwt:
   secret: ${JWT_SECRET}
 
 genai:
+  model: gemini-2.0-pro-exp-03-25
   api:
     key: ${GENAI_API_KEY}

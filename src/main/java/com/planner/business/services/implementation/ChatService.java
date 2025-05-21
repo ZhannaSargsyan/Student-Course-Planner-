@@ -1,18 +1,21 @@
 package com.planner.business.services.implementation;
 
-import lombok.RequiredArgsConstructor;
+import com.planner.business.services.IChatService;
+import com.planner.business.models.ChatSession;
 
+import com.planner.business.services.IJwtService;
+import com.planner.business.services.IPromptGeneratorService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.planner.api.dto.PlanRequest;
+import com.planner.business.dto.PlanRequest;
 import com.planner.business.dto.MessageDTO;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.google.genai.Client;
@@ -20,18 +23,21 @@ import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.Part;
 
-
 @Service
-public class ChatService {
+public class ChatService  implements IChatService {
     private final Client genAIClient;
-    private final JwtService jwtService;
-    private final CoursePlannerService coursePlannerService;
+    private final IJwtService jwtService;
+    private final IPromptGeneratorService promptGeneratorService;
+
+    @Value("${genai.model}")
+    private String modelName;
+
     private Map<String, ChatSession> sessions = new ConcurrentHashMap<>();
 
-    public ChatService(Client genAIClient, JwtService jwtService, CoursePlannerService coursePlannerService) {
+    public ChatService(Client genAIClient, IJwtService jwtService, IPromptGeneratorService promptGeneratorService) {
         this.genAIClient = genAIClient;
         this.jwtService = jwtService;
-        this.coursePlannerService = coursePlannerService;
+        this.promptGeneratorService = promptGeneratorService;
     }
 
     public List<MessageDTO> getChatHistory(String sessionId) {
@@ -61,7 +67,7 @@ public class ChatService {
             throw new IllegalStateException("Session not found");
         }
 
-        String initialPrompt = coursePlannerService.generatePlan(request);
+        String initialPrompt = promptGeneratorService.generatePrompt(request);
         String planResponse = this.askModel(session.getId(), initialPrompt);
 
         return planResponse;
@@ -99,7 +105,7 @@ public class ChatService {
         }
 
         GenerateContentResponse response = genAIClient.models
-            .generateContent("gemini-2.5-pro-exp-03-25", contents, null);
+            .generateContent(modelName, contents, null);
 
         String assistantResponse = response.text();
         session.addMessage(new MessageDTO("model", assistantResponse));
@@ -116,35 +122,5 @@ public class ChatService {
         LocalDateTime cutoff = LocalDateTime.now().minusHours(24);
         sessions.entrySet().removeIf(entry -> 
             entry.getValue().getLastActivity().isBefore(cutoff));
-    }
-
-    private static class ChatSession {
-        private final String id;
-        private LocalDateTime lastActivity;
-        private final List<MessageDTO> messages;
-
-        public ChatSession() {
-            this.id = UUID.randomUUID().toString();
-            this.lastActivity = LocalDateTime.now();
-            this.messages = new ArrayList<>();
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public LocalDateTime getLastActivity() {
-            return lastActivity;
-        }
-
-        public List<MessageDTO> getMessages() {
-            this.lastActivity = LocalDateTime.now();
-            return messages;
-        }
-
-        public void addMessage(MessageDTO message) {
-            this.lastActivity = LocalDateTime.now();
-            messages.add(message);
-        }
     }
 } 

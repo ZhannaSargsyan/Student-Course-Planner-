@@ -4,6 +4,6 @@ import java.util.List;
 
 import com.planner.data.entities.Course;
 
-public interface ICourseScraper {
+public interface ICourseScraperService {
     public List<Course> scrapeCourses();
 }

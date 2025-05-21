@@ -1,6 +1,6 @@
 package com.planner.business.utils;
 
-import com.planner.api.dto.PlanRequest;
+import com.planner.business.dto.PlanRequest;
 import com.planner.data.entities.Course;
 import java.util.List;
 
@@ -43,6 +43,14 @@ public class PromptBuilder {
 
         if (preferences.getWeeklyAvailability() != null && !preferences.getWeeklyAvailability().isEmpty()) {
             sb.append("Weekly Availability: ").append(preferences.getWeeklyAvailability()).append("\n");
+        }
+
+        if (preferences.getDesiredCredits() != 0) {
+            sb.append("Desired Credits: ").append(preferences.getDesiredCredits()).append("\n");
+        }
+
+        if (preferences.getTakenCourses() != null && !preferences.getTakenCourses().isEmpty()) {
+            sb.append("Already taken courses: ").append(String.join(", ", preferences.getTakenCourses())).append("\n");
         }
 
         sb.append("\nAvailable courses:\n");

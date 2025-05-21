@@ -1,5 +1,6 @@
 package com.planner.business.services.implementation;
 
+import com.planner.business.services.IJwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -14,7 +15,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class JwtService {
+public class JwtService implements IJwtService {
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -71,4 +72,4 @@ public class JwtService {
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
-} 
+}
