@@ -2,6 +2,7 @@ package com.planner.business.services.implementation;
 
 import com.planner.api.dto.PlanRequest;
 import com.planner.business.services.ICoursePlannerService;
+import com.planner.business.services.ICourseScraper;
 import com.planner.business.utils.PromptBuilder;
 import com.planner.data.entities.Course;
 import com.planner.data.entities.DegreeRequirement;
@@ -18,7 +19,9 @@ public class CoursePlannerService implements ICoursePlannerService {
     private final ICoursePersistenceService coursePersistenceService;
     private final DegreeRequirementRepository degreeRequirementRepository;
 
-    public CoursePlannerService(ICoursePersistenceService coursePersistenceService, DegreeRequirementRepository degreeRequirementRepository) {
+
+    public CoursePlannerService(ICoursePersistenceService coursePersistenceService,
+                                DegreeRequirementRepository degreeRequirementRepository) {
         this.coursePersistenceService = coursePersistenceService;
         this.degreeRequirementRepository = degreeRequirementRepository;
     }
@@ -29,6 +32,10 @@ public class CoursePlannerService implements ICoursePlannerService {
         filter.setProgram(request.getDegreeProgram());
 
         List<Course> availableCourses = coursePersistenceService.findByFilter(filter);
+
+        if (availableCourses.isEmpty()) {
+            availableCourses = coursePersistenceService.findAll();
+        }
 
         Optional<DegreeRequirement> requirementOpt = degreeRequirementRepository.findByProgram(request.getDegreeProgram());
         String programSummary = requirementOpt.map(DegreeRequirement::getSummary).orElse("N/A");

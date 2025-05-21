@@ -23,6 +23,17 @@ public class CoursePersistenceService implements ICoursePersistenceService {
     }
 
     @Override
+    public long count() {
+        return repo.count();
+    }
+
+    @Override
+    public List<Course> findAll() {
+        return repo.findAll();
+    }
+
+
+    @Override
     @Transactional
     public void upsertAll(List<Course> courses) {
         for (Course c : courses) {
