@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Student Planner{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    {% block content %}{% endblock %}
+
+    <button id="toggleDark" class="mode-toggle" title="Toggle dark mode">🌙</button>
+
+    <script>
+        const body = document.body;
+        const toggleBtn = document.getElementById('toggleDark');
+
+        function setModeIcon(isDark) {
+            toggleBtn.textContent = isDark ? '☀️' : '🌙';
+        }
+
+        // On load
+        const isDark = localStorage.getItem("dark-mode") === "true";
+        if (isDark) body.classList.add("dark-mode");
+        setModeIcon(isDark);
+
+        toggleBtn.addEventListener("click", () => {
+            const nowDark = body.classList.toggle("dark-mode");
+            localStorage.setItem("dark-mode", nowDark);
+            setModeIcon(nowDark);
+        });
+    </script>
+</body>
+</html>
+

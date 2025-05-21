@@ -5,6 +5,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    {% extends "base.html" %}
+
+    {% block content %}
+
     <h1>Welcome to the Student Course Planner</h1>
     <p style="text-align:center; max-width: 600px;">
         This tool helps you generate an optimized semester course plan based on your degree, preferences, and availability.
@@ -41,6 +45,7 @@
         });
     </script>
 
+    {% endblock %}
 </body>
 </html>
 

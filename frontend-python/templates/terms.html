@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    {% extends "base.html" %}
+
+    {% block content %}
     <h1>Totally Reasonable Terms & Conditions</h1>
     <div class="terms-box">
         <p>
@@ -39,5 +42,7 @@
     </div>
 
     <a href="/" class="back-button">← Return to Sanity</a>
+
+    {% endblock %}
 </body>
 </html>

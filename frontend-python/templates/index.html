@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    {% extends "base.html" %}
+
+    {% block content %}
     <!--h1>Student Course Planner</h1-->
     <form action="/plan" method="post">
 
@@ -58,9 +61,11 @@
                     <option value="MPH"> Master of Public Health </option>
                     <option value="MAMJ"> Master of Arts in Multiplatform Journalism </option>
                 </select>
+
             </div>
         </div>
-	        <div class="form-row">
+
+        <div class="form-row">
             <div class="form-group">
                 <label for="credits">Desired Number of Credits:</label>
                 <input type="number" step="0.5" name="credits" id="credits" min="0" max="9" required>
@@ -82,21 +87,21 @@
         <div class="form-row">
             <div class="form-group">
                 <label>Preferred Workload:</label>
-                <textarea name="workload" required></textarea>
+                <textarea name="workload"></textarea>
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group">
                 <label>Academic Interests:</label>
-                <textarea name="interests" required></textarea>
+                <textarea name="interests"></textarea>
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group">
                 <label>Weekly Availability:</label>
-                <textarea name="availability" required></textarea>
+                <textarea name="availability"></textarea>
             </div>
         </div>
 
@@ -139,7 +144,8 @@
         // Initial check
         checkFormValidity();
     </script>
-        <script>
+
+    <script>
         const addBtn = document.getElementById("addCourse");
         const courseInput = document.getElementById("courseInput");
         const courseList = document.getElementById("courseList");
@@ -186,5 +192,7 @@
             }
         });
     </script>
+
+    {% endblock %}
 </body>
 </html>

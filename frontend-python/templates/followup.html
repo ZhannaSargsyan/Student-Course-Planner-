@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    {% extends "base.html" %}
+
+    {% block content %}
     <h2>Follow-Up Response</h2>
 
     <div class="result-box">
@@ -30,5 +33,7 @@
     </form>
 
     <a href="/" class="back-button">← Start Over</a>
+
+    {% endblock %}
 </body>
 </html>
