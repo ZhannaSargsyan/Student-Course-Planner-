@@ -1,51 +1,44 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome to Student Course Planner</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    {% extends "base.html" %}
 
-    {% block content %}
+{% extends "base.html" %}
 
-    <h1>Welcome to the Student Course Planner</h1>
-    <p style="text-align:center; max-width: 600px;">
-        This tool helps you generate an optimized semester course plan based on your degree, preferences, and availability.
-    </p>
+{% block content %}
 
-    <form action="/start" method="post" style="text-align: center;">
-        <input type="submit" value="Start Planning" id="startButton" disabled class="disabled-button">
+<h1>Welcome to the Student Course Planner</h1>
+<p style="text-align:center; max-width: 600px;">
+    This tool helps you generate an optimized semester course plan based on your degree, preferences, and availability.
+</p>
 
-        <br>
+<form action="/start" method="post" style="text-align: center;">
+    <input type="submit" value="Start Planning" id="startButton" disabled class="disabled-button">
 
-        <label class="agreement-text">
-            <input type="checkbox" name="agree" id="agreeCheckbox">
-            I agree to the
-            <a href="/terms">terms and conditions</a>
-        </label>
-    </form>
+    <br>
 
-    {% if error %}
-        <p style="color:red; text-align:center;">{{ error }}</p>
-    {% endif %}
+    <label class="agreement-text">
+        <input type="checkbox" name="agree" id="agreeCheckbox">
+        I agree to the
+        <a href="/terms">terms and conditions</a>
+    </label>
+</form>
 
-    <script>
-        const checkbox = document.getElementById('agreeCheckbox');
-        const button = document.getElementById('startButton');
+{% if error %}
+    <p style="color:red; text-align:center;">{{ error }}</p>
+{% endif %}
 
-        checkbox.addEventListener('change', function () {
-            if (checkbox.checked) {
-                button.disabled = false;
-                button.classList.remove('disabled-button');
-            } else {
-                button.disabled = true;
-                button.classList.add('disabled-button');
-            }
-        });
-    </script>
+<script>
+    const checkbox = document.getElementById('agreeCheckbox');
+    const button = document.getElementById('startButton');
 
-    {% endblock %}
-</body>
-</html>
+    checkbox.addEventListener('change', function () {
+        if (checkbox.checked) {
+            button.disabled = false;
+            button.classList.remove('disabled-button');
+        } else {
+            button.disabled = true;
+            button.classList.add('disabled-button');
+        }
+    });
+</script>
+
+{% endblock %}
+
 

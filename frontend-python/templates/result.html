@@ -1,27 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Semester Plan Result</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    {% extends "base.html" %}
+{% extends "base.html" %}
 
-    {% block content %}
-    <h2>Recommended Semester Plan</h2>
+{% block content %}
+<h2>Recommended Semester Plan</h2>
 
-    <div class="result-box">
-        <pre>{{ response }}</pre>
-    </div>
+<div class="result-box">
+    <pre>{{ response }}</pre>
+</div>
 
-    <form action="/followup" method="post" class="followup-form">
-        <label for="question">Have a follow-up question?</label>
-        <input type="text" id="question" name="question" placeholder="Follow-up question" required>
-        <input type="submit" value="Ask">
-    </form>
+<form action="/followup" method="post" class="followup-form">
+    <input type="hidden" name="original" value="{{ response }}">
+    <label for="question">Have a follow-up question?</label>
+    <input type="text" id="question" name="question" placeholder="Follow-up question" required>
+    <input type="submit" value="Ask">
+</form>
 
-    <a href="/" class="back-button">← Start Over</a>
+<a href="/" class="back-button">← Start Over</a>
 
-    {% endblock %}
-</body>
-</html>
+{% endblock %}
