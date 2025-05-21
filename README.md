@@ -21,5 +21,5 @@ GENAI_API_KEY=your_gemini_api_key JWT_SECRET=your_jwt_secret_at_least_32_chars_l
 ```
 The application will start on `http://localhost:5001/`
 
-Note: This app binds the Flask frontend to port 5001 on your machine.
-Make sure this port is available before running the app.
+Note: This app binds the Flask frontend to port 5001, the Spring Boot backend to 8080, and PostgreSQL to 5432 on your machine.
+Please make sure these ports are available before running the application with Docker.
