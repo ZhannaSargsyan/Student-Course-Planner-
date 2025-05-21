@@ -17,7 +17,7 @@
 </div>
 
 <form action="/followup" method="post" class="followup-form">
-    <input type="hidden" name="original" value="{{ original | safe }}">
+    <input type="hidden" name="original" value="{{ original_html | safe }}">
     <label for="question">Ask another question:</label>
     <input type="text" id="question" name="question" placeholder="e.g., What if I drop one course?" required>
     <input type="submit" value="Ask Again">
