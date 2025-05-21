@@ -1,6 +1,6 @@
 package com.planner.business.services.implementation;
 
-import com.planner.business.services.ICourseScraper;
+import com.planner.business.services.ICourseScraperService;
 import com.planner.data.entities.Course;
 
 import org.jsoup.Jsoup;
@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @Service
-public class CourseScraperService implements ICourseScraper {
+public class CourseScraperService implements ICourseScraperService {
     private final String url;
 
     public CourseScraperService(@Value("${app.scraper.url}") String url) {
