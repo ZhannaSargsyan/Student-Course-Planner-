@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session
 import requests
 import bleach
+import markdown
 import re
 import os
 
@@ -83,8 +84,9 @@ def plan():
         headers=headers
     )
     backend_response = response.text
+    backend_response_html = markdown.markdown(backend_response)
 
-    return render_template('result.html', response=backend_response)
+    return render_template('result.html', response=backend_response_html, response_text=backend_response)
 
 def get_gemini_plan(prompt):
     api_key = 'GEMINI_API_KEY'

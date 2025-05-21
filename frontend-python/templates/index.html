@@ -61,7 +61,7 @@
     <div class="form-row">
         <div class="form-group">
             <label for="credits">Desired Number of Credits:</label>
-            <input type="number" step="0.5" name="credits" id="credits" min="0" max="9" required>
+            <input type="number" step="0.5" name="credits" id="credits" min="0" max="18" required>
         </div>
     </div>
 
@@ -177,7 +177,6 @@
 
     addBtn.addEventListener("click", addCourse);
 
-    // ⏎ Trigger "Add" when pressing Enter in the input
     courseInput.addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
             e.preventDefault(); // prevent form submission

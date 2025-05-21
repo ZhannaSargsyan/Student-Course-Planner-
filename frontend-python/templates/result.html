@@ -4,11 +4,11 @@
 <h2>Recommended Semester Plan</h2>
 
 <div class="result-box">
-    <pre>{{ response }}</pre>
+    {{ response | safe }}
 </div>
 
 <form action="/followup" method="post" class="followup-form">
-    <input type="hidden" name="original" value="{{ response }}">
+    <input type="hidden" name="original" value="{{ response_text}}">
     <label for="question">Have a follow-up question?</label>
     <input type="text" id="question" name="question" placeholder="Follow-up question" required>
     <input type="submit" value="Ask">
