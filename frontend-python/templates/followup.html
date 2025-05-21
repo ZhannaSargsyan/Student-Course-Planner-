@@ -9,7 +9,7 @@
             {% if message.role == "user" %}
                 <h4>Your Question:</h4>
             {% else %}
-                <h4>Gemini's Response:</h4>
+                <h4>Course Planner Recommendation:</h4>
             {% endif %}
             {{ message.content | safe }}
         </div>
