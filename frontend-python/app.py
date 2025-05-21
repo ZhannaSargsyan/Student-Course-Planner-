@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import requests
-import re
 import bleach
+import re
 
 app = Flask(__name__)
 
@@ -60,6 +60,8 @@ def plan():
         "desiredCredits": desired_credits,
         "takenCourses": valid_course_codes
     }
+
+
     print(payload)
 
     # Send to Java backend
