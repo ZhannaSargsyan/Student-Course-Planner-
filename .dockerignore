@@ -1,0 +1,8 @@
+.DS_Store
+.idea/
+*.iml
+.git/
+.gitignore
+.vscode
+venv/
+.LCK*

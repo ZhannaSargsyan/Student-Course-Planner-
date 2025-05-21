@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import requests
 import bleach
 import re
+import os
 
 app = Flask(__name__)
 
@@ -64,8 +65,12 @@ def plan():
 
     print(payload)
 
-    # Send to Java backend
-    response = requests.post("http://localhost:8080/api/plan/preview", json=payload)
+    # Use backend hostname in Docker, fallback to localhost when running locally
+
+
+# Send to Java backend
+    backend_url = os.environ.get('BACKEND_URL', 'http://localhost:8080')
+    response = requests.post(f"{backend_url}/api/plan/preview", json=payload)
     backend_response = response.text
 
     return render_template('result.html', response=backend_response)
