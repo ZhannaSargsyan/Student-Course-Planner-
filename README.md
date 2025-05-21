@@ -17,7 +17,9 @@ cd student-course-planner
 
 2. Set environment variables and run with Docker:
 ```bash
-GENAI_API_KEY=your_gemini_api_key JWT_SECRET=your_jwt_secret_at_least_32_chars_long docker-compose up --build
+export GENAI_API_KEY=your_gemini_api_key
+export JWT_SECRET=your_jwt_secret_at_least_32_chars_long
+docker-compose up --build
 ```
 The application will start on `http://localhost:5001/`
 
