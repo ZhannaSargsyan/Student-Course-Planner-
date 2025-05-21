@@ -18,10 +18,10 @@ import java.util.List;
 
 
 @Service
-public class CourseScraper implements ICourseScraper {
+public class CourseScraperService implements ICourseScraper {
     private final String url;
 
-    public CourseScraper(@Value("${app.scraper.url}") String url) {
+    public CourseScraperService(@Value("${app.scraper.url}") String url) {
         this.url = url;
     }
 
@@ -41,7 +41,7 @@ public class CourseScraper implements ICourseScraper {
                 String tag = el.tagName(), txt = el.text().trim();
 
                 if ("h3".equals(tag)) continue;
-                if (txt.matches("^[A-Z]{2,}$")) {
+                if (txt.matches("^[A-Z]{2,}(\\.[A-Z]+)*\\.?$")) {
                     currentProgram = txt;
                     continue;
                 }

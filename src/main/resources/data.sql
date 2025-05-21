@@ -1407,5 +1407,24 @@ Important Considerations for Course Recommendations:
     *   CS120 Introduction to OOP
     *   CS121 Data Structures
     *   CS130 Computer Organization
-    *   CS211 Introduction to Algorithms')
+    *   CS211 Introduction to Algorithms'),
+('LL.M.', 'The LL.M. degree requires completion of a minimum of 30 credits over 4 semesters (2 years), including the Master’s Paper and at least one credit in environmental studies in satisfaction of the university-wide environmental studies requirement.  Usually students take 1 mandatory, 3 or 2 elective courses each fall and spring earning between 9 and 6 credits per semester.
+
+There are 4 required courses LW 350 (Business Organizations), LW 334 (European Convention on Human Rights), LW 390 (Master’s Paper), and LW 365 (Administrative Law), typically one per semester. The remaining courses toward the degree are electives selected by students in consultation with their academic adviser.  Students are encouraged to be proactive in designing a program suited to their career and educational goals. Some may choose to concentrate in public or private law; others may prefer to pursue a more general course of study.  Students may also take courses outside of the LL.M. program with the permission of the Program Chair (usually limited to 1 course for the degree).
+
+Unless otherwise noted, each mandatory course carries three credits, and electives carry one or two credits. The academic performance is evaluated through midterm and final exam, class assignments and participation in class discussions.
+
+While the majority of students complete all requirements in two years, the maximum period for completion is three academic years, after which degree candidacy terminates automatically.  A course load of less than 9 or greater than 6 credits per semester requires prior approval from the Program Chair.
+
+All courses must be taken on a letter grade basis.  A cumulative grade-point average of 3.0 or higher is required for graduation and the grades in the transcript must be above D+ letter grade.
+
+It is the students’ responsibility to make sure that they have fulfilled all requirements for timely graduation. If you have any questions, please check with the Registrar’s Office or the LL.M. Program Chair.
+
+Program description
+
+The LL.M. is a rigorous academic and professional program.  Instructors have high expectations of and for students.  The grading scale for coursework corresponds to U.S. university law school programs (see AUA Law Student Handbook 2019-2020).
+
+A Practice-Oriented Approach
+
+The LL.M. program offers each student the opportunity to build the practical skills and knowledge necessary to become an effective professional in an ever more competitive global world.  Our practice-oriented approach emphasizes development of the analytical, advocacy and communication skills that attorneys need to succeed.  Our program affords students a wide-range of opportunities to practice these skills with classroom instruction, problem-solving, supervised legal writing, mock trials and negotiations, advocacy and communication exercises and daily interaction with highly qualified faculty.')
 ON CONFLICT DO NOTHING;

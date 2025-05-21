@@ -20,6 +20,7 @@ public class PromptBuilder {
         sb.append("- Recommend between 3 to 6 courses depending on workload.\n");
         sb.append("- Prioritize required core courses if available, but allow electives if needed.\n");
         sb.append("- Suggest a balanced schedule, mixing easy and difficult courses when possible.\n");
+        sb.append("- Please note that course schedule is not available, don't ask for it.\n");
         sb.append("Return your recommendation as a list of courses with a short explanation for each choice.\n");
         sb.append("Make your answer polite, friendly, dialogue towards student it will be forwarded to him without any change.\n");
         sb.append("Here is the all information about the student\n");

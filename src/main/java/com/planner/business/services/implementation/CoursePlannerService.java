@@ -2,6 +2,7 @@ package com.planner.business.services.implementation;
 
 import com.planner.api.dto.PlanRequest;
 import com.planner.business.services.ICoursePlannerService;
+import com.planner.business.services.ICourseScraper;
 import com.planner.business.utils.PromptBuilder;
 import com.planner.data.entities.Course;
 import com.planner.data.entities.DegreeRequirement;
@@ -17,10 +18,15 @@ import java.util.Optional;
 public class CoursePlannerService implements ICoursePlannerService {
     private final ICoursePersistenceService coursePersistenceService;
     private final DegreeRequirementRepository degreeRequirementRepository;
+    private final ICourseScraper courseScraper;
 
-    public CoursePlannerService(ICoursePersistenceService coursePersistenceService, DegreeRequirementRepository degreeRequirementRepository) {
+
+    public CoursePlannerService(ICoursePersistenceService coursePersistenceService,
+                                DegreeRequirementRepository degreeRequirementRepository,
+                                ICourseScraper courseScraper) {
         this.coursePersistenceService = coursePersistenceService;
         this.degreeRequirementRepository = degreeRequirementRepository;
+        this.courseScraper = courseScraper;
     }
 
     @Override
@@ -28,7 +34,17 @@ public class CoursePlannerService implements ICoursePlannerService {
         CourseFilter filter = new CourseFilter();
         filter.setProgram(request.getDegreeProgram());
 
+        long totalCourses = coursePersistenceService.count();
+        if (totalCourses == 0) {
+            List<Course> scraped = courseScraper.scrapeCourses();
+            coursePersistenceService.upsertAll(scraped);
+        }
+
         List<Course> availableCourses = coursePersistenceService.findByFilter(filter);
+
+        if (availableCourses.isEmpty()) {
+            availableCourses = coursePersistenceService.findAll();
+        }
 
         Optional<DegreeRequirement> requirementOpt = degreeRequirementRepository.findByProgram(request.getDegreeProgram());
         String programSummary = requirementOpt.map(DegreeRequirement::getSummary).orElse("N/A");
