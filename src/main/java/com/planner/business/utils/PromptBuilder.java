@@ -9,7 +9,20 @@ public class PromptBuilder {
     public static String buildPrompt(PlanRequest preferences, List<Course> courses, String degreeRequirementSummary) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Please suggest a suitable course plan for a student based on this information.\n");
+        sb.append("You are a smart university course planner assistant for AUA students. Your job is to recommend an optimized semester course plan based on the student's profile.\n");
+        sb.append("Follow these rules:\n\n");
+        sb.append("- Only recommend courses that match the student's degree curriculum.\n");
+        sb.append("- Respect course prerequisites: if a course has prerequisites not completed yet, do not suggest it.\n");
+        sb.append("- Personalize the schedule based on the student's preferences:\n");
+        sb.append("    - Preferred workload (light, normal, heavy)\n");
+        sb.append("    - Topics of interest\n");
+        sb.append("    - Time availability (e.g., only morning classes)\n");
+        sb.append("- Recommend between 3 to 6 courses depending on workload.\n");
+        sb.append("- Prioritize required core courses if available, but allow electives if needed.\n");
+        sb.append("- Suggest a balanced schedule, mixing easy and difficult courses when possible.\n");
+        sb.append("Return your recommendation as a list of courses with a short explanation for each choice.\n");
+        sb.append("Make your answer polite, friendly, dialogue towards student it will be forwarded to him without any change.\n");
+        sb.append("Here is the all information about the student\n");
 
         if (preferences.getDegreeProgram() != null && !preferences.getDegreeProgram().isEmpty()) {
             sb.append("Student program: ").append(preferences.getDegreeProgram()).append("\n");
@@ -33,8 +46,14 @@ public class PromptBuilder {
 
         sb.append("\nAvailable courses:\n");
         for (Course c : courses) {
-            sb.append("- ").append(c.getCode()).append(": ").append(c.getTitle())
-                    .append(" (").append(c.getCredits()).append(" credits)\n");
+            sb
+                .append("- ")
+                .append(c.getCode())
+                .append(": ")
+                .append(c.getTitle())
+                .append(" (").append(c.getCredits()).append(" credits)")
+                .append("Prerequisite: ").append(c.getPrerequisite())
+                .append("\n");
         }
 
         return sb.toString();
