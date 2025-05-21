@@ -1,7 +1,7 @@
 package com.planner.business.services.implementation;
 
 import com.planner.api.dto.PlanRequest;
-import com.planner.business.services.ICoursePlannerService;
+import com.planner.business.services.IPromptGeneratorService;
 import com.planner.business.utils.PromptBuilder;
 import com.planner.data.entities.Course;
 import com.planner.data.entities.DegreeRequirement;
@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CoursePlannerService implements ICoursePlannerService {
+public class PromptGeneratorService implements IPromptGeneratorService {
     private final ICoursePersistenceService coursePersistenceService;
     private final DegreeRequirementRepository degreeRequirementRepository;
 
-    public CoursePlannerService(ICoursePersistenceService coursePersistenceService, DegreeRequirementRepository degreeRequirementRepository) {
+    public PromptGeneratorService(ICoursePersistenceService coursePersistenceService, DegreeRequirementRepository degreeRequirementRepository) {
         this.coursePersistenceService = coursePersistenceService;
         this.degreeRequirementRepository = degreeRequirementRepository;
     }
@@ -26,7 +26,8 @@ public class CoursePlannerService implements ICoursePlannerService {
     @Override
     public String generatePlan(PlanRequest request) {
         CourseFilter filter = new CourseFilter();
-        filter.setProgram(request.getDegreeProgram());
+
+        filter.setExcludedCourseCodes(request.getTakenCourses());
 
         List<Course> availableCourses = coursePersistenceService.findByFilter(filter);
 

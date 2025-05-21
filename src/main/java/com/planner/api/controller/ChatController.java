@@ -2,22 +2,22 @@ package com.planner.api.controller;
 
 import java.util.List;
 
+import com.planner.business.services.IChatService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.planner.api.dto.PlanRequest;
 import com.planner.business.dto.MessageDTO;
 import com.planner.business.dto.MessageRequest;
-import com.planner.business.services.implementation.ChatService;
 import com.planner.business.services.implementation.JwtService;
 
 @RestController
 @RequestMapping("/api")
 public class ChatController {
-    private final ChatService chatService;
+    private final IChatService chatService;
     private final JwtService jwtService;
 
-    public ChatController(ChatService chatService, JwtService jwtService) {
+    public ChatController(IChatService chatService, JwtService jwtService) {
         this.chatService = chatService;
         this.jwtService = jwtService;
     }
