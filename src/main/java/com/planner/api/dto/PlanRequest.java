@@ -1,5 +1,7 @@
 package com.planner.api.dto;
 
+import java.util.List;
+
 /**
  * DTO for receiving student course planning request data from the frontend.
  */
@@ -11,6 +13,8 @@ public class PlanRequest {
     private String preferredWorkload;
     private String academicInterests;
     private String weeklyAvailability;
+    private double desiredCredits;
+    private List<String> takenCourses;
 
     // Getters and setters for all fields
     public String getFirstName() { return firstName; }
@@ -33,4 +37,20 @@ public class PlanRequest {
 
     public String getWeeklyAvailability() { return weeklyAvailability; }
     public void setWeeklyAvailability(String weeklyAvailability) { this.weeklyAvailability = weeklyAvailability; }
+
+    public double getDesiredCredits() {
+        return desiredCredits;
+    }
+    
+    public void setDesiredCredits(double desiredCredits) {
+        this.desiredCredits = desiredCredits;
+    }
+    
+    public List<String> getTakenCourses() {
+        return takenCourses;
+    }
+    
+    public void setTakenCourses(List<String> takenCourses) {
+        this.takenCourses = takenCourses;
+    }
 }
