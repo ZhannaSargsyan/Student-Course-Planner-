@@ -99,7 +99,7 @@ public class ChatService {
         }
 
         GenerateContentResponse response = genAIClient.models
-            .generateContent("gemini-2.0-flash-001", contents, null);
+            .generateContent("gemini-2.5-pro-exp-03-25", contents, null);
 
         String assistantResponse = response.text();
         session.addMessage(new MessageDTO("model", assistantResponse));
