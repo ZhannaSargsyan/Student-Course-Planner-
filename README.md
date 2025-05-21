@@ -7,12 +7,13 @@ A Spring Boot application that uses Google's Gemini AI to provide personalized c
 - Java 17 or higher
 - Maven
 - Google Gemini API key
+- Docker
 
 ## Setup
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/ZhannaSargsyan/Student-Course-Planner-.git
 cd student-course-planner
 ```
 
@@ -27,14 +28,15 @@ set GENAI_API_KEY=your_gemini_api_key
 set JWT_SECRET=your_jwt_secret_at_least_32_chars_long
 ```
 
-3. Build the project:
+3. Option 1: Build and run the application using Maven:
 ```bash
 mvn clean install
+mvn spring-boot:run
 ```
 
-4. Run the application:
+4. Option 2: Build and run the application using Docker:
 ```bash
-mvn spring-boot:run
+GENAI_API_KEY=your_gemini_api_key JWT_SECRET=your_jwt_secret_at_least_32_chars_long docker-compose up --build
 ```
 
 The application will start on `http://localhost:8080`

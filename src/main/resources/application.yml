@@ -3,9 +3,9 @@ spring:
     web-application-type: servlet
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/naneandreasyan
-    username: naneandreasyan
-    password: 1234
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/naneandreasyan}
+    username: ${SPRING_DATASOURCE_USERNAME:naneandreasyan}
+    password: ${SPRING_DATASOURCE_PASSWORD:1234}
 
   sql:
     init:

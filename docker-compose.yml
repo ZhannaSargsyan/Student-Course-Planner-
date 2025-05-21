@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: course-planner-db
+    environment:
+      POSTGRES_USER: naneandreasyan
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: naneandreasyan
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: course-planner
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/naneandreasyan
+      SPRING_DATASOURCE_USERNAME: naneandreasyan
+      SPRING_DATASOURCE_PASSWORD: 1234
+      GENAI_API_KEY: ${GENAI_API_KEY}
+      JWT_SECRET: ${JWT_SECRET}
+    restart: on-failure
+
+volumes:
+  pgdata:
