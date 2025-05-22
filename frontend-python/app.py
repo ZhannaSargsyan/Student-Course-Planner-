@@ -60,7 +60,7 @@ def plan():
         desired_credits = 0
 
     taken_courses = [ code.strip().upper() for code in cleaned_data['taken_courses'].split(',') if code.strip() ]
-    valid_course_codes = [code for code in taken_courses if re.match(r'^[A-Z]{1,3}[0-9]{3}$', code)]
+    valid_course_codes = [code for code in taken_courses if re.match(r'^[A-Z]{1,4}[0-9]{3}$', code)]
 
    # Build payload to match Java backend DTO
     payload = {
